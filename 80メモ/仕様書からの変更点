@@ -1,0 +1,12 @@
+仕様書からの変更点
+
+1:Action.java 変更日時：2025/04/19 変更者：長谷川
+	セッションからのユーザデータを取得するヘルパー関数getUserFromSession()を追加
+
+2:TestDao.java 変更日時：2025/04/18 変更者：長谷川
+	get()メソッドで、引数にSubject型のsubjectではなく、String型のsubjectCdを受け取るfilter()メソッドをオーバーロードを追加
+
+3:TestDao.java 変更日時：2025/04/18 変更者：長谷川
+	post()メソッドで、引数にSubject型のsubjectではなく、String型のsubjectCdを受け取るfilter()メソッドをオーバーロードを追加
+
+4:
