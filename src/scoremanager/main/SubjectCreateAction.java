@@ -10,6 +10,10 @@ import tool.Action;
 public class SubjectCreateAction extends Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception{
+		@SuppressWarnings("unused")
 		Teacher user = this.getUserFromSession(req, res);
+
+
+		req.getRequestDispatcher("subject_create.jsp").forward(req, res);
 	}
 }
