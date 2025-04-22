@@ -15,7 +15,7 @@ import tool.Action;
 public class StudentCreateExecuteAction extends Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception{
-		Teacher user = getUserFromSession(req, res);
+		Teacher user = this.getUserFromSession(req, res);
 		Student student = new Student();
 		StudentDao stuDao = new StudentDao();
 

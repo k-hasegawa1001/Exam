@@ -67,6 +67,7 @@ public class StudentDao extends Dao {
 			// リザルトセットを全権操作
 			while(rSet.next()){
 				// 学生インスタンスを初期化
+				// while節内でインスタンス化しないとポインタの更新がされない
 				Student student = new Student();
 				// 学生インスタンスに検索結果をセット
 				student.setNo(rSet.getString("no"));

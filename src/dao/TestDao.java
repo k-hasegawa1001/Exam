@@ -154,8 +154,9 @@ public class TestDao extends Dao {
 		StudentDao stuDao = new StudentDao();
 		SubjectDao subDao = new SubjectDao();
 		try{
-			Test test = new Test();
 			while(rs.next()){
+				Test test = new Test();
+
 				test.setStudent(stuDao.get(rs.getString("student_no")));
 				test.setClassNum(rs.getString("class_num"));
 				test.setSubject(subDao.get(rs.getString("subject_cd"), school));
