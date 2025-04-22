@@ -16,7 +16,9 @@ public class SubjectListAction extends Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception{
 ///////////////////////////////////////////////////////////////////////////////// コードレビュー user
-		Teacher user=this.getUserFromSession(req, res);
+		@SuppressWarnings("unused")
+		Teacher user = this.getUserFromSession(req, res);
+
 
         // 処理層
 
