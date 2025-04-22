@@ -13,8 +13,8 @@ public class StudentUpdateExecuteAction extends Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception{
 		@SuppressWarnings("unused")
-
 		Teacher user = this.getUserFromSession(req, res);
+
 		Student student = new Student();
 		StudentDao stuDao = new StudentDao();
 
