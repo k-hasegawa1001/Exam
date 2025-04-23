@@ -24,7 +24,7 @@
 					<p class="text-warning mb-3">${errors.get("error_duplication_cd") }</p>
 				</c:if>
 			</div>
-			<button class="btn btn-secondary mb-3" name="end">登録</button>
+			<button class="btn btn-primary mb-3" name="end">登録</button>
 		</form>
 		<a href="SubjectList.action">戻る</a>
 	</c:param>
