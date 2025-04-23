@@ -56,7 +56,7 @@ public class SubjectCreateExecuteAction extends Action {
 
 		// 完了ページ
 		if(subDao.save(subBean)){
-			req.getRequestDispatcher("student_create_done.jsp").forward(req, res);
+			req.getRequestDispatcher("subject_create_done.jsp").forward(req, res);
 		}
 	}
 }
