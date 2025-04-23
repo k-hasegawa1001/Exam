@@ -33,9 +33,9 @@ public class TestDao extends Dao {
 	 * */
 	// 入学年度と学校コードのみから生徒の成績情報を取得するためのsql
 	private String sqlByEntyearSchool = "select student_no,subject_cd, test.school_cd,test.no, point,test.class_num,name,ent_year,is_attend "
-							+ "from test join student "
-							+ "on test.student_no=student.no "
-							+ "where ent_year=? and test.school_cd=? ";
+										+ "from test join student "
+										+ "on test.student_no=student.no "
+										+ "where ent_year=? and test.school_cd=? ";
 
 	private String baseSql="select * from test where student_no=? and subject_cd=? and school_cd=? and no=?";
 
