@@ -33,6 +33,7 @@ public class SubjectDeleteExecuteAction extends Action {
 
 
 		// 削除成功時にフォワード
+		////////////// 参照制約によるエラーメッセージを表示するページを追加作成する必要あり
 		if (subDao.delete(subject)) {
 			req.getRequestDispatcher("subject_delete_done.jsp").forward(req, res);
 		}
