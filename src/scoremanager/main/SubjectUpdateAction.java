@@ -14,10 +14,6 @@ public class SubjectUpdateAction extends Action {
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception{
 
 		Teacher user = this.getUserFromSession(req, res);
-	    if (user == null) {
-	        res.sendRedirect("login.jsp"); // 例：ログイン画面へリダイレクト
-	        return;
-	    }
 
 		// DaoとBeanのインスタンス化
 		SubjectDao subDao = new SubjectDao();
