@@ -22,13 +22,13 @@
 						<th></th>
 						<th></th>
 					</tr>
-				<c:forEach var="class" items="${classList}">
+				<c:forEach var="classN" items="${classList}">
 			    <tr>
-			        <td>${class.classNum}</td>
-			        <td>${class.school}</td>
+			        <td>${classN.classNum}</td>
+			        <td>${classN.school}</td>
 			        <td></td>
 			        <td>
-			            <a href="ClassUpdate.action?Cd=${class.cd}">変更</a>
+			            <a href="ClassUpdate.action?Cd=${classN.classNum}">変更</a>
 			        </td>
 			    </tr>
 			    </c:forEach>
