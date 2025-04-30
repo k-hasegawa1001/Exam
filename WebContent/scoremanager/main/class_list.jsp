@@ -24,7 +24,7 @@
 					</tr>
 				<c:forEach var="class" items="${classList}">
 			    <tr>
-			        <td>${class.classnum}</td>
+			        <td>${class.classNum}</td>
 			        <td>${class.school}</td>
 			        <td></td>
 			        <td>
