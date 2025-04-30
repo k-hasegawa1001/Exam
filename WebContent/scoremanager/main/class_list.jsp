@@ -25,7 +25,7 @@
 				<c:forEach var="class" items="${classList}">
 			    <tr>
 			        <td>${class.classNum}</td>
-			        <td>${school.cd}</td>
+			        <td>${class.school}</td>
 			        <td></td>
 			        <td>
 			            <a href="ClassUpdate.action?Cd=${class.cd}">変更</a>
