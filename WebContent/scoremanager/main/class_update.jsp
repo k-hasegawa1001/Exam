@@ -10,7 +10,7 @@
 
 	<c:param name="content">
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">科目情報変更</h2>
-		<form method="post" action="ClassUpdateExecute.action">
+		<form method="post" action="ClassNumUpdateExecute.action">
 			<div class="mb-3">
 				<label class="form-label" for="classcd">クラスコード</label>
 				<input class="form-control mb-3" id="classcd" name="classcd" value="${now_classcd }" readonly>

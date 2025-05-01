@@ -11,7 +11,7 @@
 	<c:param name="content">
 		<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">クラス管理登録</h2>
 		<p class="text-center bg-4 bg-success bg-opacity-50">登録が完了しました。</p>
-		<a href = "ClassCreate.action" class="px-3">戻る</a>
+		<a href = "ClassNumCreate.action" class="px-3">戻る</a>
 		<a href="ClassList.action">クラス管理一覧</a>
 	</c:param>
 </c:import>
