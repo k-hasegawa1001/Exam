@@ -11,33 +11,42 @@ import bean.Teacher;
 import dao.ClassNumDao;
 import tool.Action;
 
-
 public class ClassListAction extends Action {
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception{
 
-		Teacher user = this.getUserFromSession(req, res);
+    @Override
 
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception{
 
-        ClassNumDao classDao = new ClassNumDao();
-        ClassNum classNum = new ClassNum();
-        List<ClassNum> classNumList = new ArrayList<>();
+        Teacher user = this.getUserFromSession(req, res);
 
-        // 学校に所属するクラス名のリストを取得
-        List<String> classNames = classDao.filter(user.getSchool());
+        // 一覧表示を行う為のSQL
 
-        // 取得したクラス名をClassNumオブジェクトに詰めてリストに追加
-        for (String className : classNames) {
+        ClassNumDao classNumDao = new ClassNumDao();
 
-            classNum.setClassNum(className);
-            classNumList.add(classNum);
-            classNum.setSchool(user.getSchool());
+        // ClassNum の Bean
+
+        ClassNum classnum = new ClassNum();
+
+        // classNumのリスト化
+        List<String> classNumList = new ArrayList<>();
+
+		classNumList = classNumDao.filter(user.getSchool());
+
+		// jspファイルに送信するデータ
+		List<ClassNum> list = new ArrayList<>();
+
+        // データを一つずつ取り出し保存
+        for (String classNum : classNumList) {
+        	ClassNum cNum = new ClassNum();
+        	cNum = classNumDao.get(classNum, user.getSchool());
+        	list.add(cNum);
         }
 
-        // ClassNumオブジェクトのリストをリクエスト属性に設定
-        req.setAttribute("classList", classNumList);
-
+        req.setAttribute("classList", list);
 
         req.getRequestDispatcher("class_list.jsp").forward(req, res);
+
     }
+
 }
+
