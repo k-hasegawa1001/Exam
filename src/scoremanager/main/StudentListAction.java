@@ -19,7 +19,6 @@ import tool.Action;
 public class StudentListAction extends Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception{
-		@SuppressWarnings("unused")
 		Teacher user = this.getUserFromSession(req, res);
 
 

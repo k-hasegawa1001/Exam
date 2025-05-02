@@ -18,21 +18,25 @@ public class TestListSubjectDao extends Dao {
 							+ "on test.student_no=student.no "
 							+ "where ent_year=? and test.school_cd=? ";
 
+	private String baseSql2 = "select * from test";
+
 	private List<TestListSubject> postFilter(ResultSet rs) throws Exception{
 		List<TestListSubject> list = new ArrayList<>();
 
 		while(rs.next()){
 			TestListSubject testListSubject= new TestListSubject();
 			testListSubject.setEntYear(rs.getInt("ent_year"));
+			testListSubject.setClassNum(rs.getString("class_num"));
 			testListSubject.setStudentNo(rs.getString("student_no"));
 			testListSubject.setStudentName(rs.getString("name"));
-			testListSubject.setPoint(rs.getInt("no"), rs.getInt("point"));
 			list.add(testListSubject);
 		}
 
 		return list;
 	}
 
+	// 入力された条件に合致する生徒の一覧をstudent表から取得
+	// 生徒ごとにfor文で回して成績を取得してpostFilterを通す
 	public List<TestListSubject> filter(int entYear, String classNum, Subject subject, School school) throws Exception{
 		List<TestListSubject> list = new ArrayList<>();
 
@@ -40,16 +44,18 @@ public class TestListSubjectDao extends Dao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 
+//		System.out.println(school.getCd());
+		String condition = "and test.class_num=? and test.subject_cd=? ";
+
 		try{
-			st=con.prepareStatement(baseSql);
+			st=con.prepareStatement(baseSql+condition);
 			st.setInt(1, entYear);
 			st.setString(2, school.getCd());
+			st.setString(3, classNum);
+			st.setString(4, subject.getCd());
 			rs=st.executeQuery();
-			if(rs.next()){
-				list=this.postFilter(rs);
-			}else{
-				list = null;
-			}
+
+			list=this.postFilter(rs);
 		}catch(Exception e){
 			throw e;
 		}finally{

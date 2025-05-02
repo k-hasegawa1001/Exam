@@ -8,7 +8,7 @@ public class TestListSubject implements Serializable {
 	private int entYear;
 	private String studentNo;
 	private String studentName;
-	private String class_num;
+	private String classNum;
 	private Map<Integer,Integer> points;
 
 	public int getEntYear() {
@@ -29,11 +29,11 @@ public class TestListSubject implements Serializable {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
-	public String getClass_num() {
-		return class_num;
+	public String getClassNum() {
+		return classNum;
 	}
-	public void setClass_num(String class_num) {
-		this.class_num = class_num;
+	public void setClassNum(String class_num) {
+		this.classNum = class_num;
 	}
 	public Map<Integer, Integer> getPoints() {
 		return points;
@@ -44,10 +44,11 @@ public class TestListSubject implements Serializable {
 	// 点数を取得するときは以下のgetterを使う
 	public int getPoint(int key) {
 		Map<Integer, Integer> map = this.getPoints();
+		System.out.println(key);
 		int point = map.get(key);
 		return point;
 	}
-	public void setPoint(int key, int value) {
+	public void putPoint(int key, int value) {
 		Map<Integer, Integer> map = new HashMap<>();
 		map.put(key, value);
 		this.setPoints(map);
