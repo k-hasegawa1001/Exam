@@ -18,11 +18,6 @@
 				<c:if test="${errors.get('error_schoolCd') != null }">
 					<p class="text-warning mb-3">${errors.get("error_school_cd") }</p>
 				</c:if>
-				<label for="schoolcd">学校コード</label>
-				<input type="text" id="schoolcd" name="schoolcd" class="mb-3 form-control" readonly value="${error_schoolcd }">
-				<c:if test="${errors.get('error_schoolCd') != null }">
-					<p class="text-warning mb-3">${errors.get("error_duplication_cd") }</p>
-				</c:if>
 			</div>
 			<button class="btn btn-primary mb-3" name="end">登録</button>
 		</form>
