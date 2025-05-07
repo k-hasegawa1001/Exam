@@ -18,14 +18,14 @@
 				<table class="table table-hover">
 					<tr>
 						<th>クラス</th>
-						<th>学校コード</th>
+						<th>学校名</th>
 						<th></th>
 						<th></th>
 					</tr>
 				<c:forEach var="classN" items="${classList}">
 			    <tr>
 			        <td>${classN.classNum}</td>
-			        <td>${classN.school.getCd()}</td>
+			        <td>${classN.school.getName()}</td>
 			        <td></td>
 			        <td>
 			            <a href="ClassNumUpdate.action?Cd=${classN.classNum}">変更</a>

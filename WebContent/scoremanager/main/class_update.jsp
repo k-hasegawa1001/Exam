@@ -17,7 +17,7 @@
 				<c:if test="${errors.get('errors_notFound_Cd') != null }">
 					<p class="text-warning mb-3">${errors.get("errors_notFound_cd") }</p>
 				</c:if>
-				<label class="form-label" for="schoolcd">学校コード</label>
+				<label class="form-label" for="schoolcd">学校名</label>
 				<input class="form-control mb-3" id="schoolcd" name="schoolcd" value="${now_schoolcd }" required>
 			</div>
 			<button class="btn btn-primary mb-3" name="update">変更</button>
