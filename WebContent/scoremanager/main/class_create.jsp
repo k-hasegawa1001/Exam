@@ -13,8 +13,8 @@
 
 		<form method="post" action="ClassNumCreateExecute.action">
 			<div>
-				<label for="classcd">クラスコード</label>
-				<input type="text" id="classcd" name="classcd" class="mb-3 form-control" required value="${error_classCd }">
+				<label for="classCd">クラスコード</label>
+				<input type="text" id="classCd" name="classCd" class="mb-3 form-control" required value="${error_classCd }">
 				<c:if test="${errors.get('error_schoolCd') != null }">
 					<p class="text-warning mb-3">${errors.get("error_school_cd") }</p>
 				</c:if>
