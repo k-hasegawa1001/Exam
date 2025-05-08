@@ -224,51 +224,42 @@ public class TestDao extends Dao {
 
 	////////////////////////// 追加オーバーロード
 	public List<Test> filter(int entYear, String classNum, String subject, int num, School school) throws Exception{
-		List<Test> testList = new ArrayList<>();
+	    List<Test> testList = new ArrayList<>();
+	    String sqlCondition = "and test.class_num=? and test.subject_cd=? and test.no=?";
 
-//		List<Test> testList = new ArrayList<>();
+	    Connection con = getConnection();
+	    PreparedStatement st = null;
+	    ResultSet rs = null;
 
-		// クラス番号、科目、回数をsqlに追加
-		String sqlCondition = "and test.class_num=? and test.subject_cd=? and test.no=?";
-
-		Connection con = getConnection();
-		PreparedStatement st = null;
-		ResultSet rs=null;
-
-		try{
-			st = con.prepareStatement(sqlByEntyearSchool+sqlCondition);
-			st.setInt(1, entYear);
-			st.setString(2, school.getCd());
-			st.setString(3, classNum);
-			st.setString(4, subject);
-			st.setInt(5, num);
-			rs=st.executeQuery();
-			if(rs.next()){
-				testList=this.postFilter(rs, school);
-			}else{
-				testList=null;
-			}
-		}catch(Exception e){
-			throw e;
-		}finally{
-			if(st != null){
-				try{
-					st.close();
-				}catch(SQLException sqle){
-					throw sqle;
-				}
-			}
-
-			if(con != null){
-				try{
-					con.close();
-				}catch(SQLException sqle){
-					throw sqle;
-				}
-			}
-		}
-
-		return testList;
+	    try{
+	        st = con.prepareStatement(sqlByEntyearSchool+sqlCondition);
+	        st.setInt(1, entYear);
+	        st.setString(2, school.getCd());
+	        st.setString(3, classNum);
+	        st.setString(4, subject);
+	        st.setInt(5, num);
+	        rs = st.executeQuery();
+	        // ↓ここを修正
+	        testList = this.postFilter(rs, school);
+	    }catch(Exception e){
+	        throw e;
+	    }finally{
+	        if(st != null){
+	            try{
+	                st.close();
+	            }catch(SQLException sqle){
+	                throw sqle;
+	            }
+	        }
+	        if(con != null){
+	            try{
+	                con.close();
+	            }catch(SQLException sqle){
+	                throw sqle;
+	            }
+	        }
+	    }
+	    return testList;
 	}
 
 	public boolean save(List<Test> testList) throws Exception{
