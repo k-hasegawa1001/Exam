@@ -10,7 +10,7 @@
 
     <c:param name="content">
         <section class="no">
-            <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">成績管理</h2>
+            <h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績管理</h2>
             <form action="TestRegist.action" method="post">
                 <div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
                     <!-- 入学年度 -->
@@ -65,7 +65,9 @@
             </form>
 
             <c:if test="${isSearched}">
-                <h5>科目：${subject_name}（${round}回）</h5>
+				<div>
+				    <label>科目：${subject_name}（${round}回）</label>
+				</div>
 
                 <form action="TestRegistExecute.action" method="post">
                     <input type="hidden" name="ent_year" value="${ent_year}" />
@@ -102,8 +104,8 @@
                         </tbody>
                     </table>
 
-                    <div class="text-center mt-3">
-                        <button type="submit" class="btn btn-dark">登録して終了</button>
+                    <div class="text-center col-2">
+                        <button type="submit" class="btn btn-secondary w-10">登録して終了</button>
                     </div>
                 </form>
             </c:if>
