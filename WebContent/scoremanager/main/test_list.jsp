@@ -11,7 +11,7 @@
 	<c:param name="content">
 		<section class="no">
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績参照</h2>
-			<form method="get">
+			<form method="get" action="TestListSubjectExecute.action">
 				<div class="row mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 					<div class="col-2 text-center">
 						科目情報
@@ -53,7 +53,7 @@
 
 					<hr class="mt-2">
 
-			<form method="get">
+			<form method="get" action="TestListStudentExecute.action">
 				<div class="row mx-3 align-items-center" id="filter">
 					<div class="col-2 text-center">
 						学生情報
@@ -93,6 +93,9 @@
                              <td>${test_subject.getPoint(2) }</td>
                     	</c:forEach>
                     </table>
+				</c:when>
+				<c:when test="${error!=null }">
+					<div class="text-warning">${error }</div>
 				</c:when>
 				<c:otherwise>
                     <div>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</div>

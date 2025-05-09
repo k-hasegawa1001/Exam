@@ -63,28 +63,9 @@ public class TestListAction extends Action {
 
 		Subject subject = subDao.get(subjectCdStr, user.getSchool());
 
-		if(student_no == null){
+		if(student_no == null && entYearStr!=null){
 			// TLSubDao
-//			System.out.println(entYearStr);
-			if(entYearStr != null){
-				entYear=Integer.parseInt(entYearStr);
-			}
-
-			if(entYear == 0 && classNumStr == null || entYear == 0 && subjectCdStr == null){
-				// 何も入力されていない時
-				// 握りつぶす
-			}else if(entYear != 0 && !classNumStr.equals("0") && !subjectCdStr.equals("0")){
-				// 正常に入力された場合
-//				System.out.println(subject.getName());
-				TLSubSet = TLSubDao.filter(entYear, classNumStr, subject, user.getSchool());
-//				System.out.println(TLSubSet);
-
-				req.setAttribute("test_list_subject", TLSubSet);
-				}else{
-//				System.out.println("error");
-				errors.put("error_subject", "入学年度とクラスと科目を選択してください");
-				req.setAttribute("errors", errors);
-			}
+//			res.sendRedirect("TestListSubjectExecute.action");
 		}else{
 			// TLStuDao
 		}
