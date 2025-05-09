@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import bean.School;
+import bean.Student;
 import bean.Subject;
 import bean.TestListStudent;
 
@@ -16,7 +16,8 @@ public class TestListStudentDao extends Dao {
 	private String baseSql = "select student_no,subject_cd, test.school_cd,test.no, point,test.class_num,name,ent_year,is_attend "
 							+ "from test join student "
 							+ "on test.student_no=student.no "
-							+ "where ent_year=? and test.school_cd=? ";
+							+ "where student_no=? "
+							+ "order by subject_cd, no";
 
 
 	private List<TestListStudent> postFilter(ResultSet rs) throws Exception{
@@ -27,7 +28,7 @@ public class TestListStudentDao extends Dao {
 
 		while(rs.next()){
 			Subject subject = new Subject();
-			subDao.get(rs.getString("subject_cd"), schoolDao.get(rs.getString("school_cd")));
+			subject = subDao.get(rs.getString("subject_cd"), schoolDao.get(rs.getString("school_cd")));
 
 			TestListStudent testListStudent = new TestListStudent();
 			testListStudent.setSubjectName(subject.getName());
@@ -40,7 +41,7 @@ public class TestListStudentDao extends Dao {
 		return list;
 	}
 
-	public List<TestListStudent> filter(int entYear, String classNum, Subject subject, School school) throws Exception{
+	public List<TestListStudent> filter(Student student) throws Exception{
 		List<TestListStudent> list = new ArrayList<>();
 
 		Connection con = getConnection();
@@ -48,15 +49,13 @@ public class TestListStudentDao extends Dao {
 		ResultSet rs = null;
 
 		try{
-			st=con.prepareStatement(baseSql);
-			st.setInt(1, entYear);
-			st.setString(2, school.getCd());
-			rs=st.executeQuery();
-			if(rs.next()){
-				list=this.postFilter(rs);
-			}else{
-				list = null;
+			if(student==null){
+				return list=null;
 			}
+			st=con.prepareStatement(baseSql);
+			st.setString(1, student.getNo());
+			rs=st.executeQuery();
+			list=this.postFilter(rs);
 		}catch(Exception e){
 			throw e;
 		}finally{
