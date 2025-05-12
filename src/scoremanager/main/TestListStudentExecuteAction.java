@@ -66,7 +66,7 @@ public class TestListStudentExecuteAction extends Action {
 
         List<TestListStudent> resultList = null;
 
-        resultList = TLStuDao.filter(student);
+        resultList = TLStuDao.filter(student,user.getSchool());
 
         // メッセージ処理
         if (resultList == null || resultList.isEmpty() || student == null) {

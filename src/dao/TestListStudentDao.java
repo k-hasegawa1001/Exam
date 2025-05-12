@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.School;
 import bean.Student;
 import bean.Subject;
 import bean.TestListStudent;
@@ -16,7 +17,7 @@ public class TestListStudentDao extends Dao {
 	private String baseSql = "select student_no,subject_cd, test.school_cd,test.no, point,test.class_num,name,ent_year,is_attend "
 							+ "from test join student "
 							+ "on test.student_no=student.no "
-							+ "where student_no=? "
+							+ "where student_no=? and test.school_cd=?"
 							+ "order by subject_cd, no";
 
 
@@ -41,7 +42,7 @@ public class TestListStudentDao extends Dao {
 		return list;
 	}
 
-	public List<TestListStudent> filter(Student student) throws Exception{
+	public List<TestListStudent> filter(Student student,School school) throws Exception{
 		List<TestListStudent> list = new ArrayList<>();
 
 		Connection con = getConnection();
@@ -54,6 +55,7 @@ public class TestListStudentDao extends Dao {
 			}
 			st=con.prepareStatement(baseSql);
 			st.setString(1, student.getNo());
+			st.setString(2, school.getCd());
 			rs=st.executeQuery();
 			list=this.postFilter(rs);
 		}catch(Exception e){
