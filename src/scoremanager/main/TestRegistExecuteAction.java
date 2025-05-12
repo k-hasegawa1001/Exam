@@ -2,97 +2,83 @@ package scoremanager.main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.School;
 import bean.Student;
 import bean.Subject;
 import bean.Teacher;
 import bean.Test;
-import dao.StudentDao;
 import dao.TestDao;
 import tool.Action;
 
 public class TestRegistExecuteAction extends Action {
+
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        // ユーザー情報をセッションから取得（school_cdの取得に必要）
-        Teacher teacher = this.getUserFromSession(req, res);
-        School school = teacher.getSchool();
+        // ユーザー情報取得
+        Teacher user = this.getUserFromSession(req, res);
 
-        // リクエストパラメータ取得（共通情報）
-        String subjectCd = req.getParameter("subject");
+        // パラメータ取得
+        String entYearStr = req.getParameter("ent_year");
         String classNum = req.getParameter("class_num");
-        String countStr = req.getParameter("round");
+        String subjectCd = req.getParameter("subject");
+        String roundStr = req.getParameter("round");
 
-        int count = 0;
-        try {
-            count = Integer.parseInt(countStr);
-        } catch (NumberFormatException e) {
-            req.setAttribute("error", "回数の値が不正です");
+        String[] studentNos = req.getParameterValues("student_no");
+        String[] scores = req.getParameterValues("score");
+
+        int entYear = entYearStr != null && !entYearStr.isEmpty() ? Integer.parseInt(entYearStr) : 0;
+        int round = roundStr != null && !roundStr.isEmpty() ? Integer.parseInt(roundStr) : 0;
+
+        // バリデーション
+        if (studentNos == null || scores == null || studentNos.length != scores.length) {
+            req.setAttribute("errorMessage", "不正な入力です。");
             req.getRequestDispatcher("test_regist.jsp").forward(req, res);
             return;
         }
 
-        // テスト一覧を作成
-        Map<String, String[]> parameterMap = req.getParameterMap();
+        // 登録データ作成
         List<Test> testList = new ArrayList<>();
-        TestDao testDao = new TestDao();
-        StudentDao studentDao = new StudentDao();
+        for (int i = 0; i < studentNos.length; i++) {
+            Test test = new Test();
 
-        for (String key : parameterMap.keySet()) {
-            if (key.startsWith("scores[")) {
-                // キーから student_no を抽出
-                String studentNo = key.substring(7, key.length() - 1);
-                String value = parameterMap.get(key)[0];
+            // Student情報
+            Student student = new Student();
+            student.setNo(studentNos[i]);
+            student.setEntYear(entYear);
+            student.setClassNum(classNum);
+            student.setSchool(user.getSchool());
+            test.setStudent(student);
 
-                // 空文字はスキップ（未入力）
-                if (value == null || value.isEmpty()) continue;
+            // Subject情報
+            Subject subject = new Subject();
+            subject.setCd(subjectCd);
+            test.setSubject(subject);
 
-                int point;
-                try {
-                    point = Integer.parseInt(value);
-                } catch (NumberFormatException e) {
-                    req.setAttribute("error", "点数には数値を入力してください");
-                    req.getRequestDispatcher("test_regist.jsp").forward(req, res);
-                    return;
-                }
-
-                // 点数の範囲チェック
-                if (point < 0 || point > 100) {
-                    req.setAttribute("error", "点数は0～100の範囲で入力してください");
-                    req.getRequestDispatcher("test_regist.jsp").forward(req, res);
-                    return;
-                }
-
-                // 各種オブジェクトを構築
-                Student student = new Student();
-                student.setNo(studentNo);
-
-                Subject subject = new Subject();
-                subject.setCd(subjectCd);
-
-                Test test = new Test();
-                test.setStudent(student);
-                test.setSubject(subject);
-                test.setSchool(school);
-                test.setClassNum(classNum);
-                test.setNo(count);
-                test.setPoint(point);
-
-                testList.add(test);
+            test.setNo(round);
+            test.setSchool(user.getSchool());
+            test.setClassNum(classNum);
+            try {
+                test.setPoint(Integer.parseInt(scores[i]));
+            } catch (NumberFormatException e) {
+                test.setPoint(0);
             }
+            testList.add(test);
         }
 
-        // 成績保存処理
-        if (testDao.save(testList)) {
-            res.sendRedirect("test_regist_done.jsp");
+        // DB保存
+        TestDao testDao = new TestDao();
+        boolean success = testDao.save(testList);
+
+        if (success) {
+            req.setAttribute("successMessage", "成績を登録しました。");
         } else {
-            req.setAttribute("error", "成績の保存に失敗しました");
-            req.getRequestDispatcher("test_regist.jsp").forward(req, res);
+            req.setAttribute("errorMessage", "成績の登録に失敗しました。");
         }
+
+        // 結果画面へフォワード（必要ならtest_regist_done.jspや完了画面に変更）
+        req.getRequestDispatcher("test_regist_done.jsp").forward(req, res);
     }
 }
