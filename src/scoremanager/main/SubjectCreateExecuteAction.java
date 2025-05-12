@@ -1,4 +1,4 @@
-// 科目登録
+// 追加
 package scoremanager.main;
 
 import java.util.HashMap;

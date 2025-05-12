@@ -110,6 +110,7 @@ public class ClassNumDao extends Dao {
 			st.setString(1, classNum.getSchool().getCd());
 			st.setString(2, classNum.getClassNum());
 
+			cnt = st.executeUpdate();
 		}catch(Exception e){
 			throw e;
 		}finally{
@@ -142,11 +143,22 @@ public class ClassNumDao extends Dao {
 		Connection con = getConnection();
 		PreparedStatement st = null;
 
+		School school=classNum.getSchool();
+
 		// 実行件数
 		int cnt = 0;
 
 		try{
-
+			if(this.get(newClassNum, school)==null){
+				ClassNum old = this.get(classNum.getClassNum(),classNum.getSchool());
+				st = con.prepareStatement("update class_num set class_num=? where class_num=? and school_cd=?");
+				st.setString(1, newClassNum);
+				st.setString(2, old.getClassNum());
+				st.setString(3, classNum.getSchool().getCd());
+				cnt=st.executeUpdate();
+			}else{
+				// 握りつぶす
+			}
 		}catch(Exception e){
 			throw e;
 		}finally{

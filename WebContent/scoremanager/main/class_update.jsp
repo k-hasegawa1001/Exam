@@ -18,6 +18,9 @@
 				<c:if test="${errors.get('errors_notFound_Cd') != null }">
 					<p class="text-warning mb-3">${errors.get("errors_notFound_cd") }</p>
 				</c:if>
+				<c:if test="${errors.get('errors_duplication_cd') != null }">
+					<p class="text-warning mb-3">${errors.get("errors_duplication_cd") }</p>
+				</c:if>
 			</div>
 			<button class="btn btn-primary mb-3" name="update">変更</button>
 		</form>
