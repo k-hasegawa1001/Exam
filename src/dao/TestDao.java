@@ -267,8 +267,20 @@ public class TestDao extends Dao {
 		// 変更行数
 		int line=0;
 
-		for(Test test : testList){
-			if(this.save(test,con)) line++;
+		try{
+			for(Test test : testList){
+				if(this.save(test,con)) line++;
+			}
+		}catch(Exception e){
+			throw e;
+		}finally{
+			if(con != null){
+				try{
+					con.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
 		}
 
 		if(line>0) return true;
@@ -282,26 +294,38 @@ public class TestDao extends Dao {
 		// 変更行数
 		int line=0;
 
-		// もしすでに成績情報があったらupdate、無かったらinsert
-		if(this.get(test.getStudent(), test.getSubject(), test.getSchool(), test.getNo()) == null){
-			// なかった場合
-			st=con.prepareStatement("insert into test(student_no, subject_cd, school_cd, no, point, class_num) values(?, ?, ?, ?, ?, ?)");
-			st.setString(1, test.getStudent().getNo());
-			st.setString(2, test.getSubject().getCd());
-			st.setString(3, test.getSchool().getCd());
-			st.setInt(4, test.getNo());
-			st.setInt(5, test.getPoint());
-			st.setString(6, test.getClassNum());
-			line=st.executeUpdate();
-		}else{
-			// あった場合
-			st=con.prepareStatement("update test set point=? where student_no=? and subject_cd=? and school_cd=? and no=?");
-			st.setInt(1, test.getPoint());
-			st.setString(2, test.getStudent().getNo());
-			st.setString(3, test.getSubject().getCd());
-			st.setString(4, test.getSchool().getCd());
-			st.setInt(5, test.getNo());
-			line=st.executeUpdate();
+		try{
+			// もしすでに成績情報があったらupdate、無かったらinsert
+			if(this.get(test.getStudent(), test.getSubject(), test.getSchool(), test.getNo()) == null){
+				// なかった場合
+				st=con.prepareStatement("insert into test(student_no, subject_cd, school_cd, no, point, class_num) values(?, ?, ?, ?, ?, ?)");
+				st.setString(1, test.getStudent().getNo());
+				st.setString(2, test.getSubject().getCd());
+				st.setString(3, test.getSchool().getCd());
+				st.setInt(4, test.getNo());
+				st.setInt(5, test.getPoint());
+				st.setString(6, test.getClassNum());
+				line=st.executeUpdate();
+			}else{
+				// あった場合
+				st=con.prepareStatement("update test set point=? where student_no=? and subject_cd=? and school_cd=? and no=?");
+				st.setInt(1, test.getPoint());
+				st.setString(2, test.getStudent().getNo());
+				st.setString(3, test.getSubject().getCd());
+				st.setString(4, test.getSchool().getCd());
+				st.setInt(5, test.getNo());
+				line=st.executeUpdate();
+			}
+		}catch(Exception e){
+			throw e;
+		}finally{
+			if(st != null){
+				try{
+					st.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
 		}
 
 		if(line>0){

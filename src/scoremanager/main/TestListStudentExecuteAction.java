@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.School;
 import bean.Student;
 import bean.Subject;
 import bean.Teacher;
@@ -25,10 +24,10 @@ public class TestListStudentExecuteAction extends Action {
 
     	TestListStudentDao TLStuDao = new TestListStudentDao();
     	StudentDao stuDao = new StudentDao();
-    	SubjectDao subjectDao = new SubjectDao();
+//    	SubjectDao subjectDao = new SubjectDao();
     	ClassNumDao cDao = new ClassNumDao();
     	SubjectDao sDao = new SubjectDao();
-        School school = ((Teacher) req.getSession().getAttribute("user")).getSchool();
+//        School school = ((Teacher) req.getSession().getAttribute("user")).getSchool();
 
         // JSPでのform表示用
         List<Integer> entYearSet = new ArrayList<>();
@@ -65,7 +64,9 @@ public class TestListStudentExecuteAction extends Action {
 //            return;
 //        }
 
-        List<TestListStudent> resultList = TLStuDao.filter(student);
+        List<TestListStudent> resultList = null;
+
+        resultList = TLStuDao.filter(student);
 
         // メッセージ処理
         if (resultList == null || resultList.isEmpty() || student == null) {

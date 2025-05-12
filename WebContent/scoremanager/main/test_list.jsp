@@ -72,6 +72,7 @@
 
 			<p class="text-success">${errors.get("no_entry")}</p>
 
+<%--
 			<c:choose>
 				<c:when test="${test_list_subject.size() > 0 }">
                     <div>科目：${f3.getName()}</div>
@@ -101,6 +102,7 @@
                     <div>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</div>
 				</c:otherwise>
 			</c:choose>
+--%>
 		</section>
 	</c:param>
 </c:import>

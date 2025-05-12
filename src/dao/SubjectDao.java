@@ -77,6 +77,22 @@ public class SubjectDao extends Dao {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+		}finally{
+			if(st != null){
+				try{
+					st.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
+
+			if(con != null){
+				try{
+					con.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
 		}
 
 		return list;

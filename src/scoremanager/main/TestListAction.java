@@ -11,11 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.Subject;
 import bean.Teacher;
-import bean.TestListSubject;
 import dao.ClassNumDao;
 import dao.SubjectDao;
-import dao.TestListStudentDao;
-import dao.TestListSubjectDao;
 import tool.Action;
 
 public class TestListAction extends Action {
@@ -42,11 +39,11 @@ public class TestListAction extends Action {
 //		for(Subject subject : subjectList){
 //			subjectCdSet.add(subject.getCd());
 //		}
+//
+//		TestListStudentDao TLStuDao = new TestListStudentDao();
+//		TestListSubjectDao TLSubDao = new TestListSubjectDao();
 
-		TestListStudentDao TLStuDao = new TestListStudentDao();
-		TestListSubjectDao TLSubDao = new TestListSubjectDao();
-
-		List<TestListSubject> TLSubSet = new ArrayList<>();
+//		List<TestListSubject> TLSubSet = new ArrayList<>();
 //		TLSubSet = null;
 
 		int entYear = 0;
@@ -84,7 +81,7 @@ public class TestListAction extends Action {
 		req.setAttribute("class_num_set", classNumSet);
 		req.setAttribute("subject_set", subjectList);
 
-		req.setAttribute("test_list_subjects", TLSubSet);
+//		req.setAttribute("test_list_subjects", TLSubSet);
 
 		req.getRequestDispatcher("test_list.jsp").forward(req, res);
 	}
