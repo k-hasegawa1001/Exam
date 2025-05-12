@@ -13,7 +13,7 @@
 		<form method="post" action="ClassNumUpdateExecute.action">
 			<div class="mb-3">
 				<label class="form-label" for="classcd">クラスコード</label>
-				<input class="form-control mb-3" id="old_classCd" name="old_classCd" value="${now_classcd }" hidden>
+				<input class="form-control mb-3" id="old_classCd" name="old_classCd" value="${now_classcd }" required>
 				<c:if test="${errors.get('errors_notFound_Cd') != null }">
 					<p class="text-warning mb-3">${errors.get("errors_notFound_cd") }</p>
 				</c:if>
