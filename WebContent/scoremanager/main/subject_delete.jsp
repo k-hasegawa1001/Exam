@@ -16,7 +16,7 @@
 
 					<input type="hidden" id="name" name="name" value="${subject_name}" readonly>
 					<input type="hidden" id="cd" name="cd" value="${subject_cd}" readonly>
-					<p>「${subject_name}（${subject_cd}）」を削除してもよろしいですか</p>
+					<p>「${subject_name}(${subject_cd})」を削除してもよろしいですか</p>
 					<p><button class="btn btn-danger mb-3" name="delete">削除</button></p>
 
 				</label>
