@@ -41,12 +41,19 @@ public class SubjectCreateExecuteAction extends Action {
 		// 重複エラー検知
 		if(subDao.get(cdStr, user.getSchool()) != null){
 			// すでに該当する学校コードが存在していた場合のエラー処理
-			errors.put("erros_duplication_cd", "学校コードが重複しています。");
+			errors.put("error_duplication_cd", "学校コードが重複しています。");
 			req.setAttribute("errors", errors);
 			req.getRequestDispatcher("SubjectCreate.action").forward(req, res);
+			return;
 		}
 
-
+		if(cdStr.length()<3 || cdStr.length()>3){
+			// 科目コードが三文字でなかった場合のエラーメッセージ表示処理
+			errors.put("error_invalid_length", "科目コードは3文字で入力してください");
+			req.setAttribute("errors", errors);
+			req.getRequestDispatcher("SubjectCreate.action").forward(req, res);
+			return;
+		}
 
 		// subjectにデータをセット
 		subBean.setCd(cdStr);
