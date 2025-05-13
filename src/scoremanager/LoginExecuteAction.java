@@ -1,8 +1,8 @@
 package scoremanager;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +25,7 @@ public class LoginExecuteAction extends Action {
 		teacher = null;
 		TeacherDao teacherDao = new TeacherDao();
 
-		Map<String,String> errors = new HashMap<>();
+		List<String> errors = new ArrayList<>();
 
 		userId = (String)req.getParameter("id");
 		userPassword = (String)req.getParameter("password");
@@ -40,7 +40,7 @@ public class LoginExecuteAction extends Action {
 				res.sendRedirect("main/Menu.action");
 			}else{
 				// ログイン失敗
-				errors.put("error_login", "ログインに失敗しました。IDまたはパスワードが正しくありません。");
+				errors.add("IDまたはパスワードが確認できませんでした");
 				req.setAttribute("errors", errors);
 				req.setAttribute("id", userId);
 				req.setAttribute("password", userPassword);
