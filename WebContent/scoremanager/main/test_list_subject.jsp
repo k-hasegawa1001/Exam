@@ -88,8 +88,18 @@
                         		<td>${testSubject.classNum }</td>
                         		<td>${testSubject.studentNo }</td>
                         		<td>${testSubject.studentName }</td>
-                        		<td>${testSubject.getPoint(1) }</td>
-                        		<td>${testSubject.getPoint(2) }</td>
+                        		<td>
+                        			<c:choose>
+                        				<c:when test="${testSubject.getPoint(1) != -1}">${testSubject.getPoint(1) }</c:when>
+                        				<c:otherwise>-</c:otherwise>
+                        			</c:choose>
+                        		</td>
+                        		<td>
+                        			<c:choose>
+                        				<c:when test="${testSubject.getPoint(2) != -1}">${testSubject.getPoint(2) }</c:when>
+                        				<c:otherwise>-</c:otherwise>
+                        			</c:choose>
+                        		</td>
                         	</tr>
                         </c:forEach>
                     </table>

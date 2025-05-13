@@ -43,8 +43,12 @@ public class TestListSubject implements Serializable {
 	}
 	// 点数を取得するときは以下のgetterを使う
 	public int getPoint(int key) {
+		System.out.println(key);
 		Map<Integer, Integer> map = this.getPoints();
-		int point = map.get(key);
+		int point = -1;
+		if(map.get(key)!=null){
+			point = map.get(key);
+		}
 		return point;
 	}
 	public void putPoint(int key, int value) {
