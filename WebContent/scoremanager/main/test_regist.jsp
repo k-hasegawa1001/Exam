@@ -96,8 +96,10 @@
                                     </td>
                                     <td>${test.student.name}</td>
                                     <td>
-                                        <input type="number" name="score" class="form-control" min="0" max="100"
-                                               value="${test.point}" />
+                                        <input type="number" name="score" class="form-control" value="${test.point}" />
+                                        <c:if test="${errorMessage!=null }">
+                                        	<p class="text-warning">${errorMessage }</p>
+                                        </c:if>
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -32,13 +32,6 @@ public class TestRegistExecuteAction extends Action {
         int entYear = entYearStr != null && !entYearStr.isEmpty() ? Integer.parseInt(entYearStr) : 0;
         int round = roundStr != null && !roundStr.isEmpty() ? Integer.parseInt(roundStr) : 0;
 
-        // バリデーション
-        if (studentNos == null || scores == null || studentNos.length != scores.length) {
-            req.setAttribute("errorMessage", "不正な入力です。");
-            req.getRequestDispatcher("test_regist.jsp").forward(req, res);
-            return;
-        }
-
         // 登録データ作成
         List<Test> testList = new ArrayList<>();
         for (int i = 0; i < studentNos.length; i++) {
@@ -60,6 +53,12 @@ public class TestRegistExecuteAction extends Action {
             test.setNo(round);
             test.setSchool(user.getSchool());
             test.setClassNum(classNum);
+            // バリデーション
+            if (Integer.parseInt(scores[i])<0 || Integer.parseInt(scores[i])>100) {
+                req.setAttribute("errorMessage", "0～100の範囲で入力してください");
+                req.getRequestDispatcher("TestRegist.action").forward(req, res);
+                return;
+            }
             try {
                 test.setPoint(Integer.parseInt(scores[i]));
             } catch (NumberFormatException e) {
