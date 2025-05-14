@@ -60,7 +60,7 @@
 					</div>
 					<div class="col-4">
 						<label class="form-label" for="f4">学生番号</label>
-						<input class="form-control" type="text" id="f4" name="f4" placeholder="学生番号を入力してください"
+						<input class="form-control" type="text" id="f4" name="f4" placeholder="学生番号を入力してください" required
 							<c:if test="${f4 != null }">value="${f4 }"</c:if>
 						>
 					</div>
