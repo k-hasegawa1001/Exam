@@ -14,7 +14,7 @@
 		<form method="post" action="SubjectCreateExecute.action">
 			<div>
 				<label for="cd">科目コード</label>
-				<input type="text" id="cd" name="cd" class="form-control" required value="${error_cd }">
+				<input type="text" id="cd" name="cd" class="form-control" placeholder="科目コードを入力してください" required value="${error_cd }" >
 				<c:if test="${errors.get('error_invalid_length') != null }">
 					<p class="text-warning">${errors.get("error_invalid_length") }</p>
 				</c:if>
@@ -22,7 +22,7 @@
 					<p class="text-warning">${errors.get("error_duplication_cd") }</p>
 				</c:if>
 				<label for="name">科目名</label>
-				<input type="text" id="name" name="name" class="mb-3 form-control" required value="${error_name }">
+				<input type="text" maxlength="20" id="name" name="name" class="mb-3 form-control" placeholder="科目名を入力してください" required value="${error_name }">
 			</div>
 			<button class="btn btn-primary mb-3" name="end">登録</button>
 		</form>
