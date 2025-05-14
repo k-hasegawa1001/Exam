@@ -13,9 +13,9 @@
 		<form method="post" action="StudentUpdateExecute.action">
 			<div class="mb-3">
 				<label class="form-label" for="ent_year">入学年度</label>
-				<input class="form-control mb-3" id="ent_year" name="ent_year" value="${now_ent_year }" readonly>
+				<input class="form-control mb-3 border-0" id="ent_year" name="ent_year" value="${now_ent_year }" readonly>
 				<label class="form-label" for="no">学生番号</label>
-				<input class="form-control mb-3" id="no" name="no" value="${now_no }" readonly>
+				<input class="form-control mb-3 border-0" id="no" name="no" value="${now_no }" readonly>
 				<label class="form-label" for="name">氏名</label>
 				<input class="form-control mb-3" id="name" name="name" value="${now_name }" required>
 				<label class="form-label" for="class_num">クラス</label>
