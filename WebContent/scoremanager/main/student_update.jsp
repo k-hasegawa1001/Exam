@@ -29,7 +29,7 @@
 					name="is_attend" value="t"
 					<c:if test="${now_is_attend == true}">checked</c:if>>
 			</div>
-			<button class="btn btn-primary mb-3" name="update">変更</button>
+    		<input type="submit" class="btn btn-primary mb-3" name="login" value="変更">
 		</form>
 		<a href="StudentList.action">戻る</a>
 	</c:param>
