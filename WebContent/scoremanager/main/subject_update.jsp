@@ -13,7 +13,7 @@
 		<form method="post" action="SubjectUpdateExecute.action">
 			<div class="mb-3">
 				<label class="form-label" for="cd">科目コード</label>
-				<input class="form-control mb-3" id="cd" name="cd" value="${now_cd }" readonly>
+				<input class="form-control mb-3 border-0" id="cd" name="cd" value="${now_cd }" readonly>
 				<c:if test="${errors.get('errors_notFound_Cd') != null }">
 					<p class="text-warning mb-3">${errors.get("errors_notFound_cd") }</p>
 				</c:if>
