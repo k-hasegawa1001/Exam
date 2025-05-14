@@ -47,7 +47,7 @@ public class TestListSubjectDao extends Dao {
 				testListSubject.setEntYear(rs.getInt("ent_year"));
 				testListSubject.setClassNum(rs.getString("class_num"));
 				testListSubject.setStudentNo(rs.getString("student_no"));
-				testListSubject.setStudentName(rs.getString("name"));
+				testListSubject.setStudentName(rs.getString("student_name"));
 				testListSubject.putPoint(rs.getInt("no"), rs.getInt("point"));
 				list.add(testListSubject);
 			}
