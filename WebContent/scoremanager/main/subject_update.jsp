@@ -18,7 +18,7 @@
 					<p class="text-warning mb-3">${errors.get("errors_notFound_cd") }</p>
 				</c:if>
 				<label class="form-label" for="name">科目名</label>
-				<input class="form-control mb-3" id="name" name="name" value="${now_name }" required>
+				<input class="form-control mb-3" id="name" name="name" value="${now_name }" maxlength="20" required >
 			</div>
 			<button class="btn btn-primary mb-3" name="update">変更</button>
 		</form>
