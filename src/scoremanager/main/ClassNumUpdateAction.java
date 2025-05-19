@@ -23,7 +23,7 @@ public class ClassNumUpdateAction extends Action {
 		System.out.println(classnum);
 
 
-		req.setAttribute("now_classcd", classnum.getClassNum());
+		req.setAttribute("now_classCd", classnum.getClassNum());
 
 		req.getRequestDispatcher("class_update.jsp").forward(req, res);
 	}

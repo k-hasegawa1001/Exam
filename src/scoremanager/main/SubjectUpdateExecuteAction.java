@@ -25,7 +25,6 @@ public class SubjectUpdateExecuteAction extends Action {
 		// Map
 		Map<String,String> errors = new HashMap<>();
 
-
 		// 空の値を設定
 		String inputCd=null;
 		String inputName=null;
@@ -34,12 +33,11 @@ public class SubjectUpdateExecuteAction extends Action {
 		inputCd=req.getParameter("cd"); // 科目コード
 		inputName=req.getParameter("name"); // 科目名
 
-		// 科目が存在しない場合
-		if(inputCd == null){
-			// 該当する学校コードが存在しない場合
-			errors.put("erros_notFound_cd", "科目が存在していません。");
-			req.setAttribute("errors", errors);
-			req.getRequestDispatcher("SubjectUpdate.action").forward(req, res);
+		if (subject.getCd() != null){
+			errors.put("errors_notFound_cd", "科目が存在していません。");
+		    req.setAttribute("errors", errors);
+			req.getRequestDispatcher("subject_update.jsp").forward(req, res);
+			return;
 		}
 
 		// subjectにセット
@@ -47,9 +45,10 @@ public class SubjectUpdateExecuteAction extends Action {
 		subject.setName(inputName);
 		subject.setSchool(user.getSchool());
 
-
-		if (subDao.save(subject)) {
+		if (subDao.save(subject)){
 			req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
+
 		}
 	}
 }
+

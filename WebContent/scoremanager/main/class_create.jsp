@@ -14,12 +14,15 @@
 		<form method="post" action="ClassNumCreateExecute.action">
 			<div>
 				<label for="classCd">クラスコード</label>
-				<input type="text" id="classCd" name="classCd" class="mb-3 form-control" required value="${error_classCd }">
+				<input type="text" id="classCd" name="classCd" class="mb-3 form-control"  placeholder="クラスコードを入力してください" required value="${error_classCd }">
 				<c:if test="${errors.get('error_schoolCd') != null }">
 					<p class="text-warning mb-3">${errors.get("error_school_cd") }</p>
 				</c:if>
+				<c:if test="${errors.get('error_duplication_cd') != null }">
+					<p class="text-warning mb-3">${errors.get("error_duplication_cd") }</p>
+				</c:if>
 			</div>
-			<button class="btn btn-primary mb-3" name="end">登録</button>
+			<button type="submit" class="btn btn-primary mb-3" name="end">登録</button>
 		</form>
 		<a href="ClassList.action">戻る</a>
 	</c:param>

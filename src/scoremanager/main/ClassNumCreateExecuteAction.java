@@ -26,6 +26,7 @@ public class ClassNumCreateExecuteAction extends Action {
 		String cdStr = req.getParameter("classCd");
 
 		System.out.println(cdStr);
+
 		// 文字入力が未入力
 		if (cdStr.equals(null)){
 			// 学校コード未入力
@@ -39,7 +40,7 @@ public class ClassNumCreateExecuteAction extends Action {
 		// 重複エラー検知
 		if(classDao.get(cdStr, user.getSchool()) != null){
 			// すでに該当する学校コードが存在していた場合のエラー処理
-			errors.put("errors_duplication_cd", "クラス番号が重複しています。");
+			errors.put("error_duplication_cd", "クラス番号が重複しています。");
 			req.setAttribute("errors", errors);
 			req.getRequestDispatcher("ClassNumCreate.action").forward(req, res);
 		}
