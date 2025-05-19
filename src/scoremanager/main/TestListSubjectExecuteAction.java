@@ -2,7 +2,9 @@ package scoremanager.main;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +35,8 @@ public class TestListSubjectExecuteAction extends Action {
 		LocalDate todeysDate = LocalDate.now();
         int year = todeysDate.getYear();
 
+        Map<String,String> errors = new HashMap<>();
+
 		// 10年前から1年後まで年をリストに追加
 		for (int i = year - 10; i < year + 1; i++){
 			entYearSet.add(i);
@@ -53,7 +57,9 @@ public class TestListSubjectExecuteAction extends Action {
         // 入力バリデーション
         if (entYearStr == null || entYearStr.equals("0") || classNumStr == null || classNumStr.equals("0") ||
         		subjectCdStr == null || subjectCdStr.equals("0")) {
-            req.setAttribute("error", "すべての項目を入力してください。");
+        	errors.put("error_subject", "入学年度とクラスと科目を選択してください");
+            req.setAttribute("error", errors);
+
             // 表示用
             req.setAttribute("ent_year_set", entYearSet);
             req.setAttribute("class_num_set", classNumList);
@@ -106,6 +112,7 @@ public class TestListSubjectExecuteAction extends Action {
 //            req.setAttribute("testList", resultList);
             req.setAttribute("testListSubject", resultList);
         }
+
 
         // ▼ JSPに渡す
         req.setAttribute("ent_year_set", entYearSet);

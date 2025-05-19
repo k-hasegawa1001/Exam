@@ -78,9 +78,11 @@ public class TestListStudentExecuteAction extends Action {
         }
 
         // ▼ JSPに渡す
+        req.setAttribute("studentName",student.getName());
         req.setAttribute("ent_year_set", entYearSet);
         req.setAttribute("class_num_set", classNumList);
         req.setAttribute("subject_set", subjectList);
+
 
         // 確認用
 //        for(TestListStudent stu:resultList){

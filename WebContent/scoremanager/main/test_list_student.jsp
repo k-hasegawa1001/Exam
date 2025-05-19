@@ -91,6 +91,7 @@
                     </table>
                 </c:when>
                 <c:otherwise>
+               		<div> 氏名：${studentName }(${studentNo })</div>
                     <div>学生情報が存在しませんでした</div>
                 </c:otherwise>
 		</c:choose>

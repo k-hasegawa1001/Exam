@@ -46,7 +46,9 @@
 					<button class="btn btn-secondary w-50" id="filter-button">検索</button>
 				</div>
 				<div class="mt-2 text-warning">
-					${errors.get("error_subject")}
+				<c:if test="${errors.get('errors_notFound_Cd') != null }">
+					<p class="text-warning mb-3">${errors.get("errors_notFound_cd") }</p>
+				</c:if>
 				</div>
 			</div>
 		</form>

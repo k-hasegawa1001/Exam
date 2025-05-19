@@ -45,5 +45,8 @@ public class TestListExecuteAction extends Action {
 
         // 結果表示ページへフォワード
         request.getRequestDispatcher("test_list_result.jsp").forward(request, response);
+        
+        
+        
     }
 }

@@ -47,7 +47,9 @@
 						<button class="btn btn-secondary w-50" id="filter-button">検索</button>
 					</div>
 
-					<div class="mt-2 text-warning">${errors.get("error_subject")}</div>
+					<div class="mt-2 text-warning">${error.get("error_subject")}</div>
+
+
 				</div>
 			</form>
 
