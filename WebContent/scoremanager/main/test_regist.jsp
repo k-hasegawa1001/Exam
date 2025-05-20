@@ -96,10 +96,12 @@
                                     </td>
                                     <td>${test.student.name}</td>
                                     <td>
-                                        <input type="number" name="score" class="form-control" value="${test.point}" />
-                                        <c:if test="${errorMessage!=null }">
-                                        	<p class="text-warning">${errorMessage }</p>
-                                        </c:if>
+                                        <input type="text" name="score" class="form-control" value="${test.point}" />
+                                    	<p class="text-warning">
+                                       		<c:if test="${errorStudents.contains(test.student.no)}">
+        										0～100の範囲で入力してください
+    										</c:if>
+                                       	</p>
                                     </td>
                                 </tr>
                             </c:forEach>

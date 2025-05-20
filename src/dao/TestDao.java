@@ -225,7 +225,7 @@ public class TestDao extends Dao {
 	////////////////////////// 追加オーバーロード
 	public List<Test> filter(int entYear, String classNum, String subject, int num, School school) throws Exception{
 	    List<Test> testList = new ArrayList<>();
-	    String sqlCondition = "and test.class_num=? and test.subject_cd=? and test.no=?";
+	    String sqlCondition = "and test.class_num=? and test.subject_cd=? and test.no=? and is_attend=true";
 
 	    Connection con = getConnection();
 	    PreparedStatement st = null;

@@ -40,7 +40,7 @@ public class TestRegistAction extends Action {
         LocalDate today = LocalDate.now();
         int year = today.getYear();
         List<Integer> entYearSet = new ArrayList<>();
-        for (int i = year - 10; i <= year + 1; i++) {
+        for (int i = year - 10; i < year + 1; i++) {
             entYearSet.add(i);
         }
 
@@ -74,7 +74,7 @@ public class TestRegistAction extends Action {
         if (isSearched) {
             try {
                 // 学生データを取得
-            	students = studentDao.filter(user.getSchool(), entYear, true);
+            	students = studentDao.filter(user.getSchool(), entYear, classNum, true);
                 if (students.isEmpty()) {
                     System.out.println("該当する学生データが見つかりません。");
                 }
