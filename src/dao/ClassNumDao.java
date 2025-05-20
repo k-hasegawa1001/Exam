@@ -143,6 +143,8 @@ public class ClassNumDao extends Dao {
 		Connection con = getConnection();
 		PreparedStatement st = null;
 
+		// デバッグ
+		System.out.println(classNum);
 		School school=classNum.getSchool();
 
 		// 実行件数

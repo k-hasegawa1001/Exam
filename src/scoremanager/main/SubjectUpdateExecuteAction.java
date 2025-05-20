@@ -22,22 +22,31 @@ public class SubjectUpdateExecuteAction extends Action {
 		Subject subject = new Subject();
 		SubjectDao subDao = new SubjectDao();
 
-		// Map
-		Map<String,String> errors = new HashMap<>();
-
 		// 空の値を設定
 		String inputCd=null;
 		String inputName=null;
+
+		String oldSubjectCd = req.getParameter("cd");
 
 		// パラメータ取得
 		inputCd=req.getParameter("cd"); // 科目コード
 		inputName=req.getParameter("name"); // 科目名
 
+
+		// Map
+		Map<String,String> errors = new HashMap<>();
+
+
+
 		if (subject.getCd() != null){
+			// エラー記述
 			errors.put("errors_notFound_cd", "科目が存在していません。");
 		    req.setAttribute("errors", errors);
 			req.getRequestDispatcher("subject_update.jsp").forward(req, res);
 			return;
+		}
+		if (inputCd == null){
+			req.getRequestDispatcher("SubjectUpdateError.action").forward(req, res);
 		}
 
 		// subjectにセット
@@ -45,10 +54,14 @@ public class SubjectUpdateExecuteAction extends Action {
 		subject.setName(inputName);
 		subject.setSchool(user.getSchool());
 
-		if (subDao.save(subject)){
-			req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
+		System.out.println(oldSubjectCd);
 
+		Subject old = subDao.get(oldSubjectCd, user.getSchool());
+
+		if (!(subDao.save(old,subject))){
+		req.getRequestDispatcher("SubjectUpdateError.action").forward(req, res);
+		}else {
+			req.getRequestDispatcher("subject_update_done.jsp").forward(req, res);
 		}
 	}
 }
-

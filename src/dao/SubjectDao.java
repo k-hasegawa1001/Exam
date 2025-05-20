@@ -99,7 +99,7 @@ public class SubjectDao extends Dao {
 	}
 
 	public boolean save(Subject subject) throws Exception{
-		// 新規登録 / 更新
+		// 新規登録
 		Connection con = getConnection();
 		PreparedStatement st = null;
 
@@ -115,6 +115,54 @@ public class SubjectDao extends Dao {
 				st.setString(2, subject.getName());
 				st.setString(3, subject.getSchool().getCd());
 				cnt = st.executeUpdate();
+			}else{
+				// 更新
+				st=con.prepareStatement("update subject set name=? where cd=? and school_cd=?");
+				st.setString(1, subject.getName());
+				st.setString(2, old.getCd());
+				st.setString(3, old.getSchool().getCd());
+				cnt=st.executeUpdate();
+			}
+		}catch(Exception e){
+			throw e;
+		}finally{
+			if(st != null){
+				try{
+					st.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
+
+			if(con != null){
+				try{
+					con.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
+		}
+
+		if(cnt>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public boolean save(Subject old, Subject subject) throws Exception{
+		// 更新
+		Connection con = getConnection();
+		PreparedStatement st = null;
+
+		// 実行件数
+		int cnt = 0;
+
+		try{
+			if(old == null){
+				System.out.println("test");
+				// エラー
+				// 握りつぶす
 			}else{
 				// 更新
 				st=con.prepareStatement("update subject set name=? where cd=? and school_cd=?");
