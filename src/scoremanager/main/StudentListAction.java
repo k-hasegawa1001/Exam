@@ -17,12 +17,13 @@ import tool.Action;
 
 
 public class StudentListAction extends Action {
+    private static final long serialVersionUID = 1L;
+    private static final int PAGE_SIZE = 10;
+
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception{
+
 		Teacher user = this.getUserFromSession(req, res);
-
-
-//		System.out.println(teacher.getName());
 
 		String entYearStr=""; // 入力された入学年度
 		String classNum=""; // 入力されたクラス番号
@@ -76,6 +77,29 @@ public class StudentListAction extends Action {
 			students = sDao.filter(user.getSchool(), isAttend);
 		}
 
+
+		// ページネーション処理
+		int totalStudents = sDao.count(user.getSchool());
+
+        // ページ数計算（必ず1ページ以上にする）
+        int totalPages = (int) Math.ceil((double) totalStudents / PAGE_SIZE);
+        if (totalPages == 0) totalPages = 1;
+
+        // ページ番号取得
+        int page = 1;
+        if (req.getParameter("page") != null) {
+            try {
+                page = Integer.parseInt(req.getParameter("page"));
+                if (page < 1) page = 1;
+                if (page > totalPages) page = totalPages;
+            } catch (NumberFormatException e) {
+                page = 1;
+            }
+        }
+
+        int offset = (page - 1) * PAGE_SIZE;
+        List<Student> student_page = sDao.findByPage(user.getSchool(), offset, PAGE_SIZE);
+
 		// レスポンス値をセット
 		// リクエストに入学年度をセット
 		req.setAttribute("f1", entYear);
@@ -87,6 +111,12 @@ public class StudentListAction extends Action {
 		// リクエストにデータをセット
 		req.setAttribute("class_num_set", list);
 		req.setAttribute("ent_year_set", entYearSet);
+
+		// ページネーション
+        req.setAttribute("students", student_page);
+        req.setAttribute("totalPages", totalPages);
+        req.setAttribute("currentPage", page);
+        req.setAttribute("paginationBaseUrl", "StudentList.action");
 
 		// jspへフォワード
 		req.getRequestDispatcher("student_list.jsp").forward(req, res);

@@ -292,4 +292,55 @@ public class StudentDao extends Dao {
 			return false;
 		}
 	}
+
+
+
+
+	// ページ用に新規追加されたコード
+    /**
+     * 指定した学校の学生総数を返す
+     */
+    public int count(School school) throws Exception {
+        int total = 0;
+        Connection con = getConnection();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = con.prepareStatement("select count(*) from student where school_cd=?");
+            st.setString(1, school.getCd());
+            rs = st.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } finally {
+            if (rs != null) try { rs.close(); } catch (SQLException e) {}
+            if (st != null) try { st.close(); } catch (SQLException e) {}
+            if (con != null) try { con.close(); } catch (SQLException e) {}
+        }
+        return total;
+    }
+
+    /**
+     * 指定した学校の学生をページング取得する
+     */
+    public List<Student> findByPage(School school, int offset, int limit) throws Exception {
+        List<Student> list = new ArrayList<>();
+        Connection con = getConnection();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = con.prepareStatement("select * from student where school_cd=? order by no asc limit ? offset ?");
+            st.setString(1, school.getCd());
+            st.setInt(2, limit);
+            st.setInt(3, offset);
+
+            rs = st.executeQuery();
+            list = postFilter(rs, school);
+        } finally {
+            if (rs != null) try { rs.close(); } catch (SQLException e) {}
+            if (st != null) try { st.close(); } catch (SQLException e) {}
+            if (con != null) try { con.close(); } catch (SQLException e) {}
+        }
+        return list;
+    }
 }
