@@ -56,7 +56,7 @@
 					<hr class="mt-2">
 
 			<form method="get" action="TestListStudentExecute.action">
-				<div class="row mx-3 align-items-center" id="filter">
+				<div class="row mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 					<div class="col-2 text-center">
 						学生情報
 					</div>
@@ -71,6 +71,28 @@
 					</div>
 				</div>
 			</form>
+
+			<hr class="mt-2">
+
+			<form method="get" action="TestListNameExecute.action">
+				<div class="row mx-3 align-items-center" id="filter">
+					<div class="col-2 text-center">
+						学生氏名
+					</div>
+					<div class="col-4">
+						<label class="form-label" for="f5">学生氏名</label>
+						<input class="form-control" type="text" id="f5" name="f5" placeholder="検索したい名前を入力してください" required
+							<c:if test="${f5 != null }">value="${f5 }"</c:if>
+						>
+					</div>
+					<div class="col-2 text-center">
+						<button class="btn btn-secondary w-50" id="filter-button">検索</button>
+					</div>
+				</div>
+
+			</form>
+
+			<hr class="mt-2">
 
 			<p class="text-success">${errors.get("no_entry")}</p>
 

@@ -29,6 +29,8 @@ public class TestListAction extends Action {
 		String subjectCdStr = "0"; // f3
 
 		String student_no = ""; // f4
+		String name =""; // f5
+
 
 		LocalDate todayDate=LocalDate.now();
 		int year =todayDate.getYear();
@@ -55,6 +57,8 @@ public class TestListAction extends Action {
 //		System.out.println(entYearStr);
 
 		student_no = req.getParameter("f4");
+		name = req.getParameter("f5");
+
 
 //		System.out.println(student_no);
 
@@ -76,6 +80,8 @@ public class TestListAction extends Action {
 		req.setAttribute("f1", entYear);
 		req.setAttribute("f2", classNumStr);
 		req.setAttribute("f3", subject);
+		req.setAttribute("f4", student_no);
+		req.setAttribute("f5", name);
 
 		req.setAttribute("ent_year_set", entYearSet);
 		req.setAttribute("class_num_set", classNumSet);
