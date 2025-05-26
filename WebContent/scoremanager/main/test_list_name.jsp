@@ -9,7 +9,7 @@
 	<c:param name="scripts"></c:param>
 
 	<c:param name="content">
-		<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績一覧（学生）</h2>
+		<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績一覧（科目）</h2>
 		<form method="get" action="TestListSubjectExecute.action">
 			<div class="row mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 				<div class="col-2 text-center">
@@ -46,7 +46,9 @@
 					<button class="btn btn-secondary w-50" id="filter-button">検索</button>
 				</div>
 				<div class="mt-2 text-warning">
-					${errors.get("error_subject")}
+				<c:if test="${errors.get('errors_notFound_Cd') != null }">
+					<p class="text-warning mb-3">${errors.get("errors_notFound_cd") }</p>
+				</c:if>
 				</div>
 			</div>
 		</form>
@@ -61,7 +63,7 @@
 				<div class="col-4">
 					<label class="form-label" for="f4">学生番号</label>
 					<input class="form-control" type="text" id="f4" name="f4" placeholder="学生番号を入力してください" required
-						<c:if test="${not empty studentNo }">value="${studentNo }"</c:if>
+						<c:if test="${f4 != null }">value="${f4 }"</c:if>
 					>
 				</div>
 				<div class="col-2 text-center">
@@ -70,9 +72,9 @@
 			</div>
 		</form>
 
-				<hr class="mt-2">
+		<hr class="mt-2">
 
-			<form method="get" action="TestListNameExecute.action">
+		<form method="get" action="TestListNameExecute.action">
 		    <div class="row mx-3 align-items-center" id="filter">
 		        <div class="col-2 text-center">学生氏名</div>
 		        <div class="col-4">
@@ -87,32 +89,37 @@
 		    </div>
 		</form>
 
-			<hr class="mt-2">
+		<hr class="mt-2">
+
+<!-- 	<c:if test="${not empty errors.name}">
+		    <div class="mt-2 text-warning">${errors.name}</div>
+		</c:if> -->
 
 		<c:choose>
-			<c:when test="${testListStudent.size() > 0 }">
-				<div>氏名：${studentName }(${studentNo })</div>
-                    <table class="table table-hover">
-                        <tr>
-                            <th>科目名</th>
-                            <th>科目コード</th>
-                            <th>回数</th>
-                            <th>点数</th>
-                        </tr>
-                        <c:forEach var="testStudent" items="${testListStudent }">
-                        	<tr>
-                        		<td>${testStudent.subjectName }</td>
-                        		<td>${testStudent.subjectCd }</td>
-                        		<td>${testStudent.num }</td>
-                        		<td>${testStudent.point }</td>
-                        	</tr>
-                        </c:forEach>
-                    </table>
-                </c:when>
-                <c:otherwise>
-               		<div> 氏名：${studentName }(${studentNo })</div>
-                    <div>学生情報が存在しませんでした</div>
-                </c:otherwise>
+		    <c:when test="${searchStudents != null && searchStudents.size() > 0}">
+		        <div>検索結果：${searchStudents.size()}件</div>
+		        <table class="table table-hover">
+		            <tr>
+		                <th>学生番号</th>
+		                <th>氏名</th>
+		                <th>入学年度</th>
+		                <th>クラス</th>
+		                <th>確認ページ</th>
+		            </tr>
+		            <c:forEach var="student" items="${searchStudents}">
+		                <tr>
+		                    <td>${student.no}</td>
+		                    <td>${student.name}</td>
+		                    <td>${student.entYear}</td>
+		                    <td>${student.classNum}</td>
+		                    <td><a href="TestListStudentExecute.action?f4=${student.getNo()}">確認</a></td>
+		                </tr>
+		            </c:forEach>
+		        </table>
+		    </c:when>
+		    <c:otherwise>
+		        <div>該当する学生が見つかりませんでした。</div>
+		    </c:otherwise>
 		</c:choose>
-	</c:param>
+    </c:param>
 </c:import>
