@@ -96,6 +96,8 @@ public class StudentListAction extends Action {
 
         int offset = (page - 1) * PAGE_SIZE;
         int toIndex = Math.min(offset + PAGE_SIZE, totalStudents);
+
+        // StudentPageのリストを作成
         List<Student> studentPage = new ArrayList<>();
         if (!students.isEmpty() && offset < totalStudents) {
             studentPage = students.subList(offset, toIndex);
@@ -109,6 +111,7 @@ public class StudentListAction extends Action {
         req.setAttribute("ent_year_set", entYearSet);
         req.setAttribute("totalPages", totalPages);
         req.setAttribute("currentPage", page);
+        req.setAttribute("totalItems", totalStudents);
         req.setAttribute("paginationBaseUrl", "StudentList.action");
         req.setAttribute("errors", errors);
 

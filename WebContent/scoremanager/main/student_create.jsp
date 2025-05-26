@@ -40,6 +40,6 @@
 			</div>
 			<button class="btn btn-secondary mb-3" name="end">登録して終了</button>
 		</form>
-		<a href="StudentList.action">戻る</a>
+		<a href="#" onClick="history.back()" return false;>戻る</a>
 	</c:param>
 </c:import>

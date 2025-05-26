@@ -24,6 +24,6 @@
 			</div>
 			<button type="submit" class="btn btn-primary mb-3" name="update">変更</button>
 		</form>
-		<a href="ClassList.action">戻る</a>
+		<a href="#" onClick="history.back()" return false;>戻る</a>
 	</c:param>
 </c:import>

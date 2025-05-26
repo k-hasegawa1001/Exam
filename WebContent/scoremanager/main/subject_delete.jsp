@@ -23,6 +23,6 @@
 			</div>
 
 			</form>
-			<a href="SubjectList.action">戻る</a>
+			<a href="#" onClick="history.back()" return false;>戻る</a>
 	</c:param>
 </c:import>

@@ -57,7 +57,8 @@
 
             <c:choose>
                 <c:when test="${students.size() > 0}">
-                    <div>検索結果：${students.size()}件</div>
+                	<div><strong>最大件数：${totalItems}件</strong></div>
+                    <div><strong>現在のページ表示件数：${students.size()}件</strong></div>
                     <table class="table table-hover">
                         <tr>
                             <th>入学年度</th>
