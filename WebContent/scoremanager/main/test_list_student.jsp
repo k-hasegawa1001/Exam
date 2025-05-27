@@ -91,9 +91,9 @@
 
 		<c:choose>
 		    <c:when test="${testListStudent.size() > 0 }">
-		        <div>最大件数：${totalStudents}件</div>
-		        <div><strong>現在のページ件数:${testListStudent.size()}件</strong>
-		        <div>氏名：${studentName }(${studentNo })</div>
+		        <div><strong>最大件数：${totalStudents}件</strong></div>
+		        <div><strong>現在のページ件数:${testListStudent.size()}件</strong></div>
+		        <div><strong>氏名：${studentName }(${studentNo })</strong></div>
 		        <table class="table table-hover">
 		            <tr>
 		                <th>科目名</th>
@@ -132,7 +132,7 @@
 		        </c:if>
 		    </c:when>
 		    <c:otherwise>
-		        <div> 氏名：${studentName }(${studentNo })</div>
+		        <div> <strong>氏名：${studentName }(${studentNo })</strong></div>
 		        <div>学生情報が存在しませんでした</div>
 		    </c:otherwise>
 		</c:choose>

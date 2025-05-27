@@ -93,9 +93,9 @@
 
 		<c:choose>
 			<c:when test="${testListSubject.size() > 0 }">
-				<div>最大件数：${totalItems}件</div>
+				<div><strong>最大件数：${totalItems}件</strong></div>
 				<div><strong>現在のページ件数:${testListSubject.size()}件</strong></div>
-				<div>科目：${subjectName }</div>
+				<div><strong>科目：${subjectName }</strong></div>
                     <table class="table table-hover">
                         <tr>
                             <th>入学年度</th>
