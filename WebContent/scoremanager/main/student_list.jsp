@@ -95,24 +95,29 @@
                             </tr>
                         </c:forEach>
                     </table>
-                    <div style="margin-top:20px; text-align:center;">
-					  <c:if test="${currentPage > 1}">
-					    <a href="${paginationBaseUrl}?page=${currentPage - 1}">前へ</a>
-					  </c:if>
-					  <c:forEach var="i" begin="1" end="${totalPages}">
-					    <c:choose>
-					      <c:when test="${i == currentPage}">
-					        <b style="margin:0 4px;">${i}</b>
-					      </c:when>
-					      <c:otherwise>
-					        <a style="margin:0 4px;" href="${paginationBaseUrl}?page=${i}">${i}</a>
-					      </c:otherwise>
-					    </c:choose>
-					  </c:forEach>
-					  <c:if test="${currentPage < totalPages}">
-					    <a href="${paginationBaseUrl}?page=${currentPage + 1}">次へ</a>
-					  </c:if>
-					</div>
+
+                    <!-- ページネーション -->
+                    <c:if test="${totalItems > 10}">
+	                    <div style="margin-top:20px; text-align:center;">
+						  <c:if test="${currentPage > 1}">
+						    <a href="${paginationBaseUrl}?page=${currentPage - 1}">前へ</a>
+						  </c:if>
+						  <c:forEach var="i" begin="1" end="${totalPages}">
+						    <c:choose>
+						      <c:when test="${i == currentPage}">
+						        <b style="margin:0 4px;">${i}</b>
+						      </c:when>
+						      <c:otherwise>
+						        <a style="margin:0 4px;" href="${paginationBaseUrl}?page=${i}">${i}</a>
+						      </c:otherwise>
+						    </c:choose>
+						  </c:forEach>
+						  <c:if test="${currentPage < totalPages}">
+						    <a href="${paginationBaseUrl}?page=${currentPage + 1}">次へ</a>
+						  </c:if>
+						</div>
+					</c:if>
+
                 </c:when>
                 <c:otherwise>
                     <div>学生情報が存在しませんでした</div>
