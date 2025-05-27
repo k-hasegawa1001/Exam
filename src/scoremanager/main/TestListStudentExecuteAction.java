@@ -18,83 +18,84 @@ import dao.TestListStudentDao;
 import tool.Action;
 
 public class TestListStudentExecuteAction extends Action {
+    private static final long serialVersionUID = 1L;
+    private static final int PAGE_SIZE = 10;
+
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-    	Teacher user = this.getUserFromSession(req, res);
+        Teacher user = this.getUserFromSession(req, res);
 
-    	TestListStudentDao TLStuDao = new TestListStudentDao();
-    	StudentDao stuDao = new StudentDao();
-//    	SubjectDao subjectDao = new SubjectDao();
-    	ClassNumDao cDao = new ClassNumDao();
-    	SubjectDao sDao = new SubjectDao();
-//        School school = ((Teacher) req.getSession().getAttribute("user")).getSchool();
+        TestListStudentDao TLStuDao = new TestListStudentDao();
+        StudentDao stuDao = new StudentDao();
+        ClassNumDao cDao = new ClassNumDao();
+        SubjectDao sDao = new SubjectDao();
 
-        // JSPでのform表示用
+        // JSPでのform表示用：入学年度リスト作成
         List<Integer> entYearSet = new ArrayList<>();
+        LocalDate todaysDate = LocalDate.now();
+        int year = todaysDate.getYear();
+        for (int i = year - 10; i < year + 1; i++){
+            entYearSet.add(i);
+        }
 
-		LocalDate todeysDate = LocalDate.now();
-        int year = todeysDate.getYear();
-
-		// 10年前から1年後まで年をリストに追加
-		for (int i = year - 10; i < year + 1; i++){
-			entYearSet.add(i);
-		}
-
-        // ▼ クラス番号のリスト取得（学校ごとに）
+        // クラス番号・科目一覧取得
         List<String> classNumList = cDao.filter(user.getSchool());
-        System.out.println(classNumList + "class");
-        // ▼ 科目一覧取得（SbjectDao に findAll() がある前提）
         List<Subject> subjectList = sDao.filter(user.getSchool());
-
 
         // リクエストパラメータ取得
         String studentNoStr = req.getParameter("f4");
-        Student student = stuDao.get(studentNoStr);
-
-//        // 入力バリデーション
-//        if (entYearStr == null || entYearStr.equals("0") || classNumStr == null || classNumStr.equals("0") ||
-//        		subjectCdStr == null || subjectCdStr.equals("0")) {
-//            req.setAttribute("error", "すべての項目を入力してください。");
-//            // 表示用
-//            req.setAttribute("ent_year_set", entYearSet);
-//            req.setAttribute("class_num_set", classNumList);
-//            req.setAttribute("subject_set", subjectList);
-//
-//            req.getRequestDispatcher("test_list.jsp").forward(req, res);
-//            return;
-//        }
-
-        List<TestListStudent> resultList = null;
-
-        resultList = TLStuDao.filter(student,user.getSchool());
-
-        // メッセージ処理
-        if (resultList == null || resultList.isEmpty() || student == null) {
-            req.setAttribute("message", "該当する成績情報が見つかりませんでした。");
-        } else {
-            req.setAttribute("testListStudent", resultList);
-            req.setAttribute("studentName", student.getName());
-
+        Student student = null;
+        if (studentNoStr != null && !studentNoStr.isEmpty()) {
+            student = stuDao.get(studentNoStr);
         }
 
-        // ▼ JSPに渡す
-        req.setAttribute("studentName",student.getName());
+        // ページング準備
+        String studentName = "";
+        List<TestListStudent> students_page = new ArrayList<>();
+        int totalStudents = 0;
+
+        if (student != null) {
+            studentName = student.getName();
+            // 学生で絞り込んだ総件数
+            totalStudents = TLStuDao.countForStudent(user.getSchool(), student.getNo());
+        }
+
+        int totalPages = (int) Math.ceil((double) totalStudents / PAGE_SIZE);
+        if (totalPages == 0) totalPages = 1;
+
+        int page = 1;
+        if (req.getParameter("page") != null) {
+            try {
+                page = Integer.parseInt(req.getParameter("page"));
+                if (page < 1) page = 1;
+                if (page > totalPages) page = totalPages;
+            } catch (NumberFormatException e) {
+                page = 1;
+            }
+        }
+        int offset = (page - 1) * PAGE_SIZE;
+
+        if (student != null && totalStudents > 0) {
+            students_page = TLStuDao.findByPageForStudent(user.getSchool(), student.getNo(), offset, PAGE_SIZE);
+        }
+
+        // メッセージ処理
+        if (student == null || students_page.isEmpty()) {
+            req.setAttribute("message", "該当する成績情報が見つかりませんでした。");
+        }
+
+        // JSPに渡す
+        req.setAttribute("studentName", studentName);
+        req.setAttribute("studentNo", studentNoStr);
         req.setAttribute("ent_year_set", entYearSet);
         req.setAttribute("class_num_set", classNumList);
         req.setAttribute("subject_set", subjectList);
+        req.setAttribute("testListStudent", students_page);
+        req.setAttribute("totalPages", totalPages);
+        req.setAttribute("currentPage", page);
+        req.setAttribute("totalStudents", totalStudents);
+        req.setAttribute("paginationBaseUrl", "TestListStudentExecute.action");
 
-
-        // 確認用
-//        for(TestListStudent stu:resultList){
-//        	System.out.println("科目名 : "+stu.getSubjectName()+"\n得点 : "+stu.getPoint());
-//        }
-//        System.out.println(resultList2);
-
-        // 表示用
-        req.setAttribute("studentNo", studentNoStr);
-//        System.out.println(resultList.size());
-
-        // JSPへフォワード
         req.getRequestDispatcher("test_list_student.jsp").forward(req, res);
     }
 
@@ -106,4 +107,3 @@ public class TestListStudentExecuteAction extends Action {
         return "";
     }
 }
-
