@@ -11,7 +11,7 @@
 	<c:param name="content">
 		<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績管理</h2>
 		<p class="text-center bg-4 bg-success bg-opacity-50">登録が完了しました。</p>
-		<a href="TestRegist.action">戻る</a>
+		<a href="#" onClick="history.back()" return false;>戻る</a>
 		<a href="TestList.action">成績参照</a>
 	</c:param>
 </c:import>
