@@ -91,7 +91,8 @@
 
 		<c:choose>
 		    <c:when test="${testListStudent.size() > 0 }">
-		        <div>検索結果：${totalStudents}件</div>
+		        <div>最大件数：${totalStudents}件</div>
+		        <div><strong>現在のページ件数:${testListStudent.size()}件</strong>
 		        <div>氏名：${studentName }(${studentNo })</div>
 		        <table class="table table-hover">
 		            <tr>

@@ -93,7 +93,8 @@
 
 		<c:choose>
 			<c:when test="${testListSubject.size() > 0 }">
-				<div>検索結果：${totalItems}件</div>
+				<div>最大件数：${totalItems}件</div>
+				<div><strong>現在のページ件数:${testListSubject.size()}件</strong></div>
 				<div>科目：${subjectName }</div>
                     <table class="table table-hover">
                         <tr>
