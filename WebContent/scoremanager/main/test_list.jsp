@@ -96,6 +96,10 @@
 
 			<p class="text-success">${errors.get("no_entry")}</p>
 
+			<label style="color:#00FFFF">
+				科目情報を選択または学生情報を入力して検索ボタンをクリックしてください
+			</label>
+
 <%--
 			<c:choose>
 				<c:when test="${test_list_subject.size() > 0 }">
