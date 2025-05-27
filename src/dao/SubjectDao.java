@@ -241,6 +241,60 @@ public class SubjectDao extends Dao {
 		}else{
 			return false;
 		}
+	}
 
+
+	/**
+	 * ページネーション対応の科目リスト取得
+	 * @param school 学校情報
+	 * @param page 取得したいページ番号（1始まり）
+	 * @param pageSize 1ページあたりの件数
+	 * @return 指定範囲のSubjectリスト
+	 */
+	public List<Subject> filterPaginated(School school, int page, int pageSize) throws Exception {
+	    Connection con = getConnection();
+	    PreparedStatement st = null;
+	    ResultSet rs = null;
+	    List<Subject> list = new ArrayList<>();
+
+	    int offset = (page - 1) * pageSize;
+	    try {
+	        st = con.prepareStatement("select * from subject where school_cd=? limit ? offset ?");
+	        st.setString(1, school.getCd());
+	        st.setInt(2, pageSize);
+	        st.setInt(3, offset);
+	        rs = st.executeQuery();
+	        while (rs.next()) {
+	            Subject subject = new Subject();
+	            subject.setCd(rs.getString("cd"));
+	            subject.setName(rs.getString("name"));
+	            subject.setSchool(school);
+	            list.add(subject);
+	        }
+	    } finally {
+	        if (st != null) st.close();
+	        if (con != null) con.close();
+	    }
+	    return list;
+	}
+
+	public int count(School school) throws Exception {
+	    Connection con = getConnection();
+	    PreparedStatement st = null;
+	    ResultSet rs = null;
+	    int count = 0;
+	    try {
+	        st = con.prepareStatement("select count(*) from subject where school_cd=?");
+	        st.setString(1, school.getCd());
+	        rs = st.executeQuery();
+	        if (rs.next()) {
+	            count = rs.getInt(1);
+	        }
+	    } finally {
+	        if (st != null) st.close();
+	        if (con != null) con.close();
+	    }
+	    return count;
 	}
 }
+

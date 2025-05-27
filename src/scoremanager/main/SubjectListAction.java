@@ -1,4 +1,3 @@
-// 科目一覧
 package scoremanager.main;
 
 import java.util.List;
@@ -11,30 +10,35 @@ import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
 
-
 public class SubjectListAction extends Action {
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception{
-///////////////////////////////////////////////////////////////////////////////// コードレビュー user
-		@SuppressWarnings("unused")
-		Teacher user = this.getUserFromSession(req, res);
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        Teacher user = this.getUserFromSession(req, res);
+        SubjectDao subDao = new SubjectDao();
 
+        int pageSize = 10;
+        int totalItems = subDao.count(user.getSchool());
+        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
 
-        // 処理層
-
-        SubjectDao suDao = new SubjectDao();
-
-        // Subjectオブジェクトのリストを取得
-        List<Subject> subjectList = suDao.filter(user.getSchool());
-
-        ///確認用
-        for(Subject sub:subjectList){
-        	System.out.println(sub.getCd());
+        String pageParam = req.getParameter("page");
+        int currentPage = 1;
+        if (pageParam != null) {
+            try {
+                currentPage = Integer.parseInt(pageParam);
+                if (currentPage < 1) currentPage = 1;
+                if (currentPage > totalPages) currentPage = totalPages;
+            } catch (NumberFormatException e) {
+                currentPage = 1;
+            }
         }
 
-        // 科目をリストにセット
-        ///////////////////////////////////////////////////////////////////////////////// コードレビュー subjectlist
+        List<Subject> subjectList = subDao.filterPaginated(user.getSchool(), currentPage, pageSize);
+
         req.setAttribute("subjectList", subjectList);
+        req.setAttribute("currentPage", currentPage);
+        req.setAttribute("totalPages", totalPages);
+        req.setAttribute("paginationBaseUrl", "SubjectList.action");
+        req.setAttribute("totalItems", totalItems);
 
         req.getRequestDispatcher("subject_list.jsp").forward(req, res);
     }
