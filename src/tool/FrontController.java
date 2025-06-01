@@ -26,7 +26,6 @@ public class FrontController extends HttpServlet{
 			// アクションクラスのインスタンスを返却
 			Action action = (Action)Class.forName(name).getDeclaredConstructor().newInstance();
 
-			// 遷移先URLを取得
 			action.execute(req, res);
 		}catch(Exception e){
 			e.printStackTrace();
